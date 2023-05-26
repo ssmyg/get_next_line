@@ -6,8 +6,14 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:37 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/25 14:04:38 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/05/25 15:41:52 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// char	*get_next_line(int fd);
+#include <stddef.h>
+
+char	*get_next_line(int fd)
+{
+	(void)fd;
+	return (NULL);
+}
