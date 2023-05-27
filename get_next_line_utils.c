@@ -6,30 +6,33 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:32 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/26 16:55:48 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/05/27 19:50:37 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
 
-int	ft_getchar(int fd)
+int	ft_getc(int fd)
 {
 	static t_buffer	buffer;
 
 	if (buffer.n == 0)
 	{
-		buffer.n = read(fd, buffer.buf, BUF_SIZE);
+		buffer.n = read(fd, buffer.buf, BUFFER_SIZE);
 		if (buffer.n < 0)
+		{
+			buffer.n = 0;
 			return (READ_ERROR);
+		}
 		buffer.bufp = buffer.buf;
 	}
 	if (--buffer.n >= 0)
 	{
 		return ((unsigned char)*buffer.bufp++);
 	}
+	buffer.n = 0;
 	return (EOF);
 }
 
