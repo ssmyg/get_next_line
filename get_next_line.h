@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:42 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/27 19:51:15 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/05/27 20:02:55 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #  define BUFFER_SIZE 4096
 # endif
 
+# define BLOCK_SIZE 4096
 # define READ_ERROR -99
 
 typedef struct s_buffer

@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:37 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/27 19:50:49 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/05/27 20:06:37 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_next_line(int fd)
 	size_t	i;
 
 	i = 0;
-	ret = (char *)malloc(sizeof(char) * BUFFER_SIZE);
+	ret = (char *)malloc(sizeof(char) * BLOCK_SIZE);
 	while (1)
 	{
 		c = ft_getc(fd);
@@ -51,6 +51,9 @@ char	*get_next_line(int fd)
 			ret[i] = '\0';
 			return (ret);
 		}
+		/*********************************
+		* TODO 後で消す
+		*********************************/
 		if (i > 4000)
 		{
 			ret[i] = '\n';
