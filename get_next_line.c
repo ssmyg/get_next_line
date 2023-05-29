@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:37 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/27 20:06:37 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/05/29 19:59:37 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,54 +15,56 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-char	*get_next_line(int fd)
+t_string	*read_line(int fd)
 {
-	char	c;
-	char	*ret;
-	size_t	i;
+	char		c;
+	t_string	*str;
 
-	i = 0;
-	ret = (char *)malloc(sizeof(char) * BLOCK_SIZE);
+	str = init_str();
 	while (1)
 	{
 		c = ft_getc(fd);
 		if (c == READ_ERROR)
 		{
-			free(ret);
+			free_str(str);
 			return (NULL);
 		}
 		if (c == EOF)
-		{
-			if (i > 0)
-			{
-				ret[i] = '\0';
-				return (ret);
-			}
-			else
-			{
-				free(ret);
-				return (NULL);
-			}
-		}
+			return (str);
 		if (c == '\n')
 		{
-			ret[i] = '\n';
-			i++;
-			ret[i] = '\0';
-			return (ret);
+			str = ft_putc(str, '\n');
+			return (str);
 		}
-		/*********************************
-		* TODO 後で消す
-		*********************************/
-		if (i > 4000)
-		{
-			ret[i] = '\n';
-			i++;
-			ret[i] = '\0';
-			return (ret);
-		}
-		ret[i] = c;
-		i++;
-		//write(1, &c, 1);
+		str = ft_putc(str, c);
+		if (!str)
+			return (NULL);
 	}
+}
+
+char	*get_next_line(int fd)
+{
+	t_string	*str;
+	char		*ret;
+	size_t		i;
+
+	str = read_line(fd);
+	if (!str)
+		return (NULL);
+	if (str->len == 0)
+	{
+		free_str(str);
+		return (NULL);
+	}
+	ret = (char *)malloc(sizeof(char) * (str->len + 1));
+	if (!ret)
+		return (NULL);
+	i = 0;
+	while (i < str->len)
+	{
+		ret[i] = str->str[i];
+		i++;
+	}
+	ret[str->len] = '\0';
+	return (ret);
 }

@@ -6,12 +6,13 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:32 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/27 19:50:37 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/05/29 19:57:22 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 int	ft_getc(int fd)
@@ -36,30 +37,54 @@ int	ft_getc(int fd)
 	return (EOF);
 }
 
-/*
-char	*read_stdin(void)
+t_string	*ft_putc(t_string *str, char c)
 {
-	ssize_t	len;
-	char	*file_buf;
-	int		c;
-	int		i;
+	size_t	i;
+	char	*new_str;
 
-	len = 11000 * 11000 + 100;
-	file_buf = malloc(sizeof(char) * (len + 1));
-	if (file_buf == NULL)
-		return (NULL);
-	i = 0;
-	while (1)
+	if (str->len + 1 >= str->max_len)
 	{
-		c = ft_getchar();
-		if (c == EOF)
-			break ;
-		file_buf[i] = (unsigned char)c;
-		i++;
-		if (i == len)
-			break ;
+		new_str = (char *)malloc(sizeof(char) * (str->max_len + BLOCK_SIZE));
+		if (!new_str)
+		{
+			free_str(str);
+			return (NULL);
+		}
+		i = 0;
+		while (i < str->len)
+		{
+			new_str[i] = str->str[i];
+			i++;
+		}
+		free(str->str);
+		str->str = new_str;
+		str->max_len = str->max_len + BLOCK_SIZE;
 	}
-	file_buf[i] = '\0';
-	return (file_buf);
+	str->str[str->len] = c;
+	str->len++;
+	return (str);
 }
-*/
+
+t_string	*init_str(void)
+{
+	t_string	*str;
+
+	str = (t_string *)malloc(sizeof(t_string));
+	if (!str)
+		return (NULL);
+	str->str = (char *)malloc(sizeof(char) * BLOCK_SIZE);
+	if (!str->str)
+	{
+		free(str);
+		return (NULL);
+	}
+	str->max_len = BLOCK_SIZE;
+	str->len = 0;
+	return (str);
+}
+
+void	free_str(t_string *str)
+{
+	free(str->str);
+	free(str);
+}
