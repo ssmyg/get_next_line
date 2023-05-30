@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:37 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/30 12:07:33 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/05/30 12:14:06 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-t_string	*init_str(void)
+static t_string	*init_str(void)
 {
 	t_string	*str;
 
@@ -33,13 +33,13 @@ t_string	*init_str(void)
 	return (str);
 }
 
-void	free_str(t_string *str)
+static void	free_str(t_string *str)
 {
 	free(str->str);
 	free(str);
 }
 
-t_string	*ft_putc(t_string *str, char c)
+static t_string	*ft_putc(t_string *str, char c)
 {
 	size_t	i;
 	char	*new_str;
@@ -67,7 +67,7 @@ t_string	*ft_putc(t_string *str, char c)
 	return (str);
 }
 
-t_string	*read_line(int fd)
+static t_string	*read_line(int fd)
 {
 	char		c;
 	t_string	*str;
