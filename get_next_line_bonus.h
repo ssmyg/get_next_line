@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:42 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/29 20:17:02 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/05/30 12:14:53 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,26 @@
 
 # include <stddef.h>
 
-typedef struct s_buffer
+typedef struct s_buffer	t_buffer;
+
+struct					s_buffer
 {
-	char	buf[BUFFER_SIZE];
-	char	*bufp;
-	int		n;
-}			t_buffer;
+	char				buf[BUFFER_SIZE];
+	char				*bufp;
+	int					n;
+
+	int					fd;
+	t_buffer			*next;
+};
 
 typedef struct s_string
 {
-	char	*str;
-	size_t	max_len;
-	size_t	len;
-}			t_string;
+	char				*str;
+	size_t				max_len;
+	size_t				len;
+}						t_string;
 
-char		*get_next_line(int fd);
-
-int			ft_getc(int fd);
-t_string	*ft_putc(t_string *str, char c);
-t_string	*init_str(void);
-void		free_str(t_string *str);
+char					*get_next_line(int fd);
+int						ft_getc(int fd);
 
 #endif

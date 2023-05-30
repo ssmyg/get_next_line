@@ -6,85 +6,89 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:32 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/29 20:17:06 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/05/30 13:48:12 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
+static t_buffer	buffer_list;
+
+static t_buffer	*init_buffer(int fd)
+{
+	t_buffer	*ret;
+
+	ret = (t_buffer *)malloc(sizeof(t_buffer));
+	ret->bufp = ret->buf;
+	ret->n = 0;
+	ret->fd = fd;
+	ret->next = NULL;
+	return (ret);
+}
+/*
+void	free_buffer(int fd)
+{
+	t_buffer	*buf;
+	t_buffer	*prev;
+
+	buf = &buffer_list;
+	prev = buf;
+	while (buf)
+	{
+		if (buf->fd == fd)
+		{
+			prev->next = buf->next;
+			free(buf);
+			return ;
+		}
+		prev = buf;
+		buf = buf->next;
+	}
+}
+*/
+static t_buffer	*find_buffer(int fd)
+{
+	t_buffer	*buf;
+	t_buffer	*prev;
+
+	buf = &buffer_list;
+	prev = buf;
+	while (buf)
+	{
+		if (buf->fd == fd)
+			return (buf);
+		prev = buf;
+		buf = buf->next;
+	}
+	buf = init_buffer(fd);
+	prev->next = buf;
+	return (buf);
+}
+
 int	ft_getc(int fd)
 {
-	static t_buffer	buffer;
+	t_buffer	*buf;
 
-	if (buffer.n == 0)
+	buf = find_buffer(fd);
+	if (buf->n == 0)
 	{
-		buffer.n = read(fd, buffer.buf, BUFFER_SIZE);
-		if (buffer.n < 0)
+		buf->n = read(fd, buf->buf, BUFFER_SIZE);
+		if (buf->n < 0)
 		{
-			buffer.n = 0;
+			buf->n = 0;
+			//free_buffer(fd);
 			return (READ_ERROR);
 		}
-		buffer.bufp = buffer.buf;
+		buf->bufp = buf->buf;
 	}
-	if (--buffer.n >= 0)
+	if (--buf->n >= 0)
 	{
-		return ((unsigned char)*buffer.bufp++);
+		return ((unsigned char)*buf->bufp++);
 	}
-	buffer.n = 0;
+	buf->n = 0;
+	//free_buffer(fd);
 	return (EOF);
-}
-
-t_string	*ft_putc(t_string *str, char c)
-{
-	size_t	i;
-	char	*new_str;
-
-	if (str->len + 1 >= str->max_len)
-	{
-		new_str = (char *)malloc(sizeof(char) * (str->max_len + BLOCK_SIZE));
-		if (!new_str)
-		{
-			free_str(str);
-			return (NULL);
-		}
-		i = 0;
-		while (i < str->len)
-		{
-			new_str[i] = str->str[i];
-			i++;
-		}
-		free(str->str);
-		str->str = new_str;
-		str->max_len = str->max_len + BLOCK_SIZE;
-	}
-	str->str[str->len] = c;
-	str->len++;
-	return (str);
-}
-
-t_string	*init_str(void)
-{
-	t_string	*str;
-
-	str = (t_string *)malloc(sizeof(t_string));
-	if (!str)
-		return (NULL);
-	str->str = (char *)malloc(sizeof(char) * BLOCK_SIZE);
-	if (!str->str)
-	{
-		free(str);
-		return (NULL);
-	}
-	str->max_len = BLOCK_SIZE;
-	str->len = 0;
-	return (str);
-}
-
-void	free_str(t_string *str)
-{
-	free(str->str);
-	free(str);
 }
