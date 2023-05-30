@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:42 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/29 19:58:48 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/05/30 12:06:33 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,6 @@ typedef struct s_string
 }			t_string;
 
 char		*get_next_line(int fd);
-
 int			ft_getc(int fd);
-t_string	*ft_putc(t_string *str, char c);
-t_string	*init_str(void);
-void		free_str(t_string *str);
 
 #endif
