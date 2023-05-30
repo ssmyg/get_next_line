@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:32 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/30 12:06:18 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/05/30 15:35:46 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static t_buffer	buf;
-
 int	ft_getc(int fd)
 {
+	static t_buffer	buf;
+
 	if (buf.n == 0)
 	{
 		buf.n = read(fd, buf.buf, BUFFER_SIZE);

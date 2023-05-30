@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:32 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/30 14:12:09 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/05/30 15:35:20 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static t_buffer	buffer_list;
+static t_buffer	g_buffer_list;
 
 static t_buffer	*init_buffer(int fd)
 {
@@ -34,7 +34,7 @@ static void	free_buffer(int fd)
 	t_buffer	*buf;
 	t_buffer	*prev;
 
-	buf = &buffer_list;
+	buf = &g_buffer_list;
 	prev = buf;
 	while (buf)
 	{
@@ -54,8 +54,8 @@ static t_buffer	*find_buffer(int fd)
 	t_buffer	*buf;
 	t_buffer	*prev;
 
-	buffer_list.fd = DUMMY_FD;
-	buf = &buffer_list;
+	g_buffer_list.fd = DUMMY_FD;
+	buf = &g_buffer_list;
 	prev = buf;
 	while (buf)
 	{
