@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:32 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/30 13:48:12 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/05/30 14:12:09 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static t_buffer	*init_buffer(int fd)
 	ret->next = NULL;
 	return (ret);
 }
-/*
-void	free_buffer(int fd)
+
+static void	free_buffer(int fd)
 {
 	t_buffer	*buf;
 	t_buffer	*prev;
@@ -48,12 +48,13 @@ void	free_buffer(int fd)
 		buf = buf->next;
 	}
 }
-*/
+
 static t_buffer	*find_buffer(int fd)
 {
 	t_buffer	*buf;
 	t_buffer	*prev;
 
+	buffer_list.fd = DUMMY_FD;
 	buf = &buffer_list;
 	prev = buf;
 	while (buf)
@@ -79,7 +80,7 @@ int	ft_getc(int fd)
 		if (buf->n < 0)
 		{
 			buf->n = 0;
-			//free_buffer(fd);
+			free_buffer(fd);
 			return (READ_ERROR);
 		}
 		buf->bufp = buf->buf;
@@ -89,6 +90,6 @@ int	ft_getc(int fd)
 		return ((unsigned char)*buf->bufp++);
 	}
 	buf->n = 0;
-	//free_buffer(fd);
+	free_buffer(fd);
 	return (EOF);
 }
