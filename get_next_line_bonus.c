@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:37 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/30 14:02:41 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/05/30 15:40:01 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,6 @@ char	*get_next_line(int fd)
 		i++;
 	}
 	ret[str->len] = '\0';
+	free_str(str);
 	return (ret);
 }
