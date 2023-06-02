@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:37 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/06/02 12:03:08 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/06/02 12:34:10 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ char	*get_next_line(int fd)
 	char		*ret;
 	size_t		i;
 
+	if (BUFFER_SIZE < 1)
+		return (NULL);
 	str = read_line(fd);
 	if (!str)
 		return (NULL);
