@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:32 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/30 15:35:20 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/06/02 12:13:54 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static t_buffer	*init_buffer(int fd)
 	t_buffer	*ret;
 
 	ret = (t_buffer *)malloc(sizeof(t_buffer));
+	if (!ret)
+		return (NULL);
 	ret->bufp = ret->buf;
 	ret->n = 0;
 	ret->fd = fd;
@@ -54,6 +56,8 @@ static t_buffer	*find_buffer(int fd)
 	t_buffer	*buf;
 	t_buffer	*prev;
 
+	if (fd < 0)
+		return (NULL);
 	g_buffer_list.fd = DUMMY_FD;
 	buf = &g_buffer_list;
 	prev = buf;
@@ -65,6 +69,8 @@ static t_buffer	*find_buffer(int fd)
 		buf = buf->next;
 	}
 	buf = init_buffer(fd);
+	if (!buf)
+		return (NULL);
 	prev->next = buf;
 	return (buf);
 }
@@ -74,6 +80,8 @@ int	ft_getc(int fd)
 	t_buffer	*buf;
 
 	buf = find_buffer(fd);
+	if (!buf)
+		return (READ_ERROR);
 	if (buf->n == 0)
 	{
 		buf->n = read(fd, buf->buf, BUFFER_SIZE);

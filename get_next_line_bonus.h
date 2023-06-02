@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:42 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/05/30 18:51:38 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/06/02 12:15:46 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # define BLOCK_SIZE 4096
 # define READ_ERROR -99
-# define DUMMY_FD -9
+# define DUMMY_FD -9999
 
 # include <stddef.h>
 
