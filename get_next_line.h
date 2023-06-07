@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:42 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/06/07 11:40:29 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/06/07 11:47:54 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@
 # define READ_ERROR -99
 
 # include <stddef.h>
+# include <unistd.h>
 
 typedef struct s_buffer
 {
-	long	n;
+	ssize_t	n;
 	char	*bufp;
 	char	buf[BUFFER_SIZE];
 }			t_buffer;
