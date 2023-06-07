@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:32 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/06/02 12:13:54 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/06/07 15:45:03 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-static t_buffer	g_buffer_list;
 
 static t_buffer	*init_buffer(int fd)
 {
@@ -31,12 +29,12 @@ static t_buffer	*init_buffer(int fd)
 	return (ret);
 }
 
-static void	free_buffer(int fd)
+static void	free_buffer(int fd, t_buffer *buffer_list)
 {
 	t_buffer	*buf;
 	t_buffer	*prev;
 
-	buf = &g_buffer_list;
+	buf = buffer_list;
 	prev = buf;
 	while (buf)
 	{
@@ -51,15 +49,15 @@ static void	free_buffer(int fd)
 	}
 }
 
-static t_buffer	*find_buffer(int fd)
+static t_buffer	*find_buffer(int fd, t_buffer *buffer_list)
 {
 	t_buffer	*buf;
 	t_buffer	*prev;
 
 	if (fd < 0)
 		return (NULL);
-	g_buffer_list.fd = DUMMY_FD;
-	buf = &g_buffer_list;
+	buffer_list->fd = DUMMY_FD;
+	buf = buffer_list;
 	prev = buf;
 	while (buf)
 	{
@@ -77,9 +75,10 @@ static t_buffer	*find_buffer(int fd)
 
 int	ft_getc(int fd)
 {
-	t_buffer	*buf;
+	static t_buffer	buffer_list;
+	t_buffer		*buf;
 
-	buf = find_buffer(fd);
+	buf = find_buffer(fd, &buffer_list);
 	if (!buf)
 		return (READ_ERROR);
 	if (buf->n == 0)
@@ -88,7 +87,7 @@ int	ft_getc(int fd)
 		if (buf->n < 0)
 		{
 			buf->n = 0;
-			free_buffer(fd);
+			free_buffer(fd, &buffer_list);
 			return (READ_ERROR);
 		}
 		buf->bufp = buf->buf;
@@ -98,6 +97,6 @@ int	ft_getc(int fd)
 		return ((unsigned char)*buf->bufp++);
 	}
 	buf->n = 0;
-	free_buffer(fd);
+	free_buffer(fd, &buffer_list);
 	return (EOF);
 }
