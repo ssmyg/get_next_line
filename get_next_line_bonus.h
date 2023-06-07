@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:42 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/06/07 11:49:00 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/06/07 11:57:35 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define DUMMY_FD -9999
 
 # include <stddef.h>
+# include <unistd.h>
 
 typedef struct s_buffer
 {
