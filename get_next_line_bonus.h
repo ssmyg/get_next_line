@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:42 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/06/02 12:15:46 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/06/07 11:45:08 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_buffer
 	int				fd;
 	struct s_buffer	*next;
 
-	int				n;
+	long			n;
 	char			*bufp;
 	char			buf[BUFFER_SIZE];
 }					t_buffer;
