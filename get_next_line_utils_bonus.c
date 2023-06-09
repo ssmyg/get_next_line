@@ -6,7 +6,7 @@
 /*   By: susumuyagi <susumuyagi@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:04:32 by susumuyagi        #+#    #+#             */
-/*   Updated: 2023/06/07 15:45:03 by susumuyagi       ###   ########.fr       */
+/*   Updated: 2023/06/09 13:45:04 by susumuyagi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static t_buffer	*find_buffer(int fd, t_buffer *buffer_list)
 
 	if (fd < 0)
 		return (NULL);
-	buffer_list->fd = DUMMY_FD;
 	buf = buffer_list;
 	prev = buf;
 	while (buf)
@@ -78,6 +77,7 @@ int	ft_getc(int fd)
 	static t_buffer	buffer_list;
 	t_buffer		*buf;
 
+	buffer_list.fd = DUMMY_FD;
 	buf = find_buffer(fd, &buffer_list);
 	if (!buf)
 		return (READ_ERROR);
